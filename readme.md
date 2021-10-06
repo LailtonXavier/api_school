@@ -69,6 +69,7 @@
       -- vms criar um `model: Aluno referente a tabela Alunos (do sequelize`
       [se-liga] = Migrate criar as tabelas no banco de dados, Model criar as
         tabelas do Migrate que sera disponibilizada pra gente
+
       - Depois q criado a class em (model-Aluno.js) vms criar a sua conexão
       - em `database` -> `index.js` seria nossa conexão
       - por fim dessa part: chama sempre pra rodar automatico em `App.js`
@@ -93,10 +94,12 @@
             ->  `src` -> `database`-> `migrations` -> `dataEhora-aluno.js`
           -- nessa migration criada, vms criar nossa tabela com os dados desejados no banco atravez dela
           -- npx sequelize db:migrate = esse comando vai criar nossa tabela na
+
         - `./src/models/Aluno.js` = criando nosso model Aluno com os dados da tabelas de nosso banco
           estratura de class do proprio sequelize
         - depois da criação de nossa migrate precisamos pega-la todos os models e fazer uma conexão
         direta com as configurações de nosso banco, migration, models.
+
         - `./src/database/index.js` = pegando todos models e colocando num array
         - em `App.js` importamos esse `database.index.js` para se auto executar e ficar rodando.
         - testa em um `controller` passando os dados dos campos e colocando pra rodar, com isso vai
@@ -117,3 +120,53 @@
 
       - depois de criado como fazer nosso [models] de user
       - `./src/models/User.js`
+
+      - vms validar nossa senha aqui msm, por ela ser hash
+     esse VIRTUAL significa q n vai existi na base de dados
+
+            eu quero gerar um erro
+   - defaultValue? '' // se n for enviado nd, por padrao vai ficar um vazio
+   - validate    // ele usa o validator do React
+     -- noEmpty: { msg: 'error'} tiramos pq tera outra validaçao
+     -- len de tamanho, recebe um array: primeiro seria o tam minimo e o max
+
+     senha = hash = bcryptjs
+     - npm i bcryptjs
+  como vou jogar a senha no campo hash?
+     vms fazer isso com bcript.js e criar um hook
+     - hook: ele vai falar, qnd vc for salva no banco de dados,
+       antes de salvar joga a senha no hash
+
+     - hook bcryptjs
+     - this.addHook('falar em qual local a quer q aconteca', usuario func )
+       -- a gente quer antes de salva add hook 'beforeSave'
+     - eslint : no-param-reassign precisamos essa reatribuiçao
+     - agora vms criar o `controller`
+
+     [PRECISAMO-ALGO]
+     - em `database` -> `index.js`temos que colocar em nosso array q pegando geral
+     - pegando nossos models
+     - agora continuar...
+
+     - `UserController` so pra test, é muito parecido com `aluno``
+        -- depois é so criar uma `userRoutes`
+        -
+       [OBS:-in-ROUTES]
+       [metodos-usando-no-mercado-atal]
+
+    - se a gente tiver um controller e precise listar os users
+     index         -> lista todo os usuarios    -> GET
+     store/create  -> cria um novo usuario      -> POST
+     delete        -> apaga um usuario          -> DELETE
+     show          -> mostra um usuario         -> GET
+     update        -> que atualiza um usuario   -> PATCH ou PUT
+
+     (PATCH = qnd vc altare apenas um valor
+     PUT   = qnd vc pega um Obj e substitui por outro)
+
+    -- se tiver mais metodos q esse no seu `controller` esta errado
+       n precisa fazer mais do que ele precisa
+
+    - depois de feito o `model-user`e a `route-user`para colocar pra rodar no `App.js`
+    - ate o momento n criamos nosso erro personalizados, simplismente envolvendo
+      num try{}catch em `UserController`

@@ -1,8 +1,9 @@
 import Sequelize from 'sequelize';
 import databaseConfig from '../config/database';
 import Aluno from '../models/Aluno'; // todos model devem vir aqui e colocar no array
+import User from '../models/User';
 
-const models = [Aluno]; // todos models aqui
+const models = [Aluno, User]; // todos models aqui
 
 const connection = new Sequelize(databaseConfig);
 
