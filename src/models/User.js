@@ -53,7 +53,7 @@ export default class User extends Model {
     this.addHook('beforeSave', async (user) => {
       // fazendo um hash de pass e jogando en pass_hash
       // seria de 8 a 10
-      if (user.password) {
+      if (user.password) { // com isso estamos garantindo q sera enviado a senha
         user.password_hash = await bcryptjs.hash(user.password, 8);
       }
     });

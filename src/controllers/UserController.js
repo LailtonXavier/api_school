@@ -5,44 +5,105 @@ class UserController {
     try {
       const novoUser = await User.create(req.body);
 
-      res.json(novoUser);
+      return res.json(novoUser);
     } catch (e) {
-      res.status(400).json({
+      return res.status(400).json({
         errors: e.errors.map((err) => err.message),
       });
     }
   }
-}
 
+  // index = retorna todos = depois de criar Vai em Routes
+  async index(req, res) {
+    try {
+      const users = await User.findAll();
+      return res.json(users);
+    } catch (e) {
+      return res.json(null);
+      // se cair no catch o program quebrou, returno valor nulo
+    }
+  }
+
+  // show = pegando pelo id
+  async show(req, res) {
+    try {
+      // pegando pela a primatyKey do user
+      // const { id } = req.params;
+      const user = await User.findByPk(req.params.id);
+
+      return res.json(user);
+    } catch (e) {
+      return res.json(null);
+    }
+  }
+
+  // update = vai ser uma mistura
+  async update(req, res) {
+    try {
+      // bad request
+      if (!req.params.id) {
+        return res.status(400).json({
+          errors: ['ID não enviado.'],
+        });
+      }
+      const user = await User.findByPk(req.params.id);
+
+      // se n existe user
+      if (!user) {
+        return res.status(400).json({
+          errors: ['Usuario não existe'],
+        });
+      }
+
+      // oq a pessoa mandar eu atualizo
+      const novosDados = await user.update(req.body);
+
+      return res.json(novosDados);
+    } catch (e) {
+      // com esse tratamento vemos o erro
+      return res.status(400).json({
+        errors: e.errors.map((err) => err.message),
+      });
+    }
+  }
+
+  // delete
+  async delete(req, res) {
+    try {
+      if (!req.params.id) {
+        res.status(400).json({
+          errors: ['ID náo enviado'],
+        });
+      }
+
+      const user = await User.findByPk(req.params.id);
+
+      if (!user) {
+        return res.status(400).json({
+          errors: ['Usuarion não existe'],
+        });
+      }
+
+      // so com isso ele vai ser apagador na base de dados
+      await user.destroy();
+      return res.json(user);
+    } catch (e) {
+      return res.status(400).json({
+        errors: e.errors.map((err) => err.message),
+      });
+    }
+  }
+
+  //
+}
 export default new UserController();
 
 /**
- * [ERRORS]
- *  - erro 400 bab request
- *    de de um console.log(e) vera um monte de coisa
- *      mas o que queremos seria o campo ( errors ) q possui as msgs de errors
- *  - add uma chave de errors pra ficar mais facil manipular
- *  - para receber os dados  =  dentro de ( User.create( req.body ) ).
  *
- *  - dentro de errors
- * errors: [
-    ValidationErrorItem {
-      message: 'email must be unique',
-      type: 'unique violation',
-      path: 'email',
-      value: 'jose@gmail.com',
-      origin: 'DB',
-      instance: [User],
-      validatorKey: 'not_unique',
-      validatorName: null,
-      validatorArgs: []
-    }
-  ],
+// index = sempre q mexer com a base de dados usamos Async
+// pq retorna um promise e precismos esperar oq esta sendo retornado
+// da base de daados
 
-    - O massa é que podemos pegar esses campos e mudar a msg em `Modals`
-     -- no email add o campo ( unique ) e coloque uma msg
-
-    [
       isso estava tanto no `UserContreoller` pra test
       {
         name: 'Jose',

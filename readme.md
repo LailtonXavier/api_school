@@ -33,12 +33,12 @@
     - criar tabela, editar, configurar...
       - vamos configurar o `dotenv`
       - npm i dotenv
-  # dotenv
+  ## dotenv
     - estou conectando os dados no meu banco do servidor
     - depois das configurações ambiente é so import o dotenv
     - import em `app`
 
-  # sequelize [criando-alunos]
+  ## sequelize [criando-alunos]
       -
     - Configuerações q estão
     - migrations = são as alterações que vms fazer no banco de dados
@@ -105,7 +105,7 @@
         - testa em um `controller` passando os dados dos campos e colocando pra rodar, com isso vai
         preencher nosso banco, e podemos ver insomia.
 
-  # nova Feature de usuario [criando-usuario]
+  ## nova Feature de usuario [criando-usuario]
     - [map] vms criar o usuario, logar o usuario e depois criar um middleware q faz com a rota tal
       so possa ser acessado por usuarios logado.
     - precisamos criar um [migration] de tabela usuario no banco
@@ -124,6 +124,28 @@
       - vms validar nossa senha aqui msm, por ela ser hash
      esse VIRTUAL significa q n vai existi na base de dados
 
+     - hook bcryptjs
+     - this.addHook('falar em qual local a quer q aconteca', usuario func )
+       -- a gente quer antes de salva add hook 'beforeSave'
+     - eslint : no-param-reassign precisamos essa reatribuiçao
+
+     - agora vms criar o `controller`
+
+     [OBS:-in-ROUTES]
+       [metodos-usando-no-mercado-atal]
+
+    - se a gente tiver um controller e precise listar os users
+     index         -> lista todo os usuarios    -> GET
+     store/create  -> cria um novo usuario      -> POST
+     delete        -> apaga um usuario          -> DELETE
+     show          -> mostra um usuario         -> GET
+     update        -> que atualiza um usuario   -> PATCH ou PUT
+
+     (PATCH = qnd vc altare apenas um valor
+     PUT   = qnd vc pega um Obj e substitui por outro)
+
+     -
+
             eu quero gerar um erro
    - defaultValue? '' // se n for enviado nd, por padrao vai ficar um vazio
    - validate    // ele usa o validator do React
@@ -137,12 +159,6 @@
      - hook: ele vai falar, qnd vc for salva no banco de dados,
        antes de salvar joga a senha no hash
 
-     - hook bcryptjs
-     - this.addHook('falar em qual local a quer q aconteca', usuario func )
-       -- a gente quer antes de salva add hook 'beforeSave'
-     - eslint : no-param-reassign precisamos essa reatribuiçao
-     - agora vms criar o `controller`
-
      [PRECISAMO-ALGO]
      - em `database` -> `index.js`temos que colocar em nosso array q pegando geral
      - pegando nossos models
@@ -151,18 +167,7 @@
      - `UserController` so pra test, é muito parecido com `aluno``
         -- depois é so criar uma `userRoutes`
         -
-       [OBS:-in-ROUTES]
-       [metodos-usando-no-mercado-atal]
 
-    - se a gente tiver um controller e precise listar os users
-     index         -> lista todo os usuarios    -> GET
-     store/create  -> cria um novo usuario      -> POST
-     delete        -> apaga um usuario          -> DELETE
-     show          -> mostra um usuario         -> GET
-     update        -> que atualiza um usuario   -> PATCH ou PUT
-
-     (PATCH = qnd vc altare apenas um valor
-     PUT   = qnd vc pega um Obj e substitui por outro)
 
     -- se tiver mais metodos q esse no seu `controller` esta errado
        n precisa fazer mais do que ele precisa
@@ -170,3 +175,9 @@
     - depois de feito o `model-user`e a `route-user`para colocar pra rodar no `App.js`
     - ate o momento n criamos nosso erro personalizados, simplismente envolvendo
       num try{}catch em `UserController`
+
+  ## CRUD de usuarios
+    - indo em nosso `UserController` para fazer nosso `CRUD`
+    - dentro de `UserController`criaremos os metodos, depois precisamos
+    criar a rota em `UserRoutes` com o metodo creiado do crud
+    -- Muito simples de fazer... so rever a aula pra fixar mais
