@@ -1,5 +1,7 @@
 ### Node Js course Api
 
+  - npm run dev
+
   ## configação - editorconfin - eslint
 
 -  ## nodemon + sucrase
@@ -181,3 +183,35 @@
     - dentro de `UserController`criaremos os metodos, depois precisamos
     criar a rota em `UserRoutes` com o metodo creiado do crud
     -- Muito simples de fazer... so rever a aula pra fixar mais
+
+  ## Gerando um JWT
+    - npm i jsonwebtoken
+    - vamos logar utilizando `JSON WEB TOKEN`
+    - no `.env`vai estar nosso `token-secret`e o tempo de expirar
+    - `Controller`dentro vms criar para o token `TokenController`
+
+    -- Como funciona:
+      - vamos criar uma rota de `toke` q seria tipo a rota de login
+      - vamos criar um token e entrar de volta pra ele
+    - en `routes` vamos criar `tokenRoutes`
+
+    - vamos pegar em `App` importanto e usando
+      - npm run dev   =   para testar
+
+    - queremos receber email e senha para criar e verificar
+    - em `tokenController` vamos pegar esses campos
+      - vamos checar se os campos é igual oa do `user``
+      - vamos usar bcrypt para ver a senha
+        - em `Model User` vamos criar uma func `passwordValid`
+        - pegando o password e comparando com password_hash
+        - em `tokenController`pegamos essa func `passwordValid`e
+        - fazemos a verificação se n é valida
+    - so lembrando queremos retornar um token para o usuario
+      - ainda em `tokenController`
+      - import o jwt de jsonwebtoken para criar o token
+        - dando um jwt.asign() pegando o id, email, a secret, tempo expirar
+
+    [OBS:] sempre que o user fizer um requisição para um pagina ele precisa
+      mandar esse `token` para ter o acesso, passado atravez do `headers`
+      - logo abaixo deve ser cria um `middleware`de autenticacão onde vamos
+      checar se o usuario esta mandando pra gente o `token` gerado

@@ -60,6 +60,11 @@ export default class User extends Model {
 
     return this;
   }
+
+  // comparando, ele retorna uma promisse
+  passwordValid(password) {
+    return bcryptjs.compare(password, this.password_hash);
+  }
 }
 
 /**
