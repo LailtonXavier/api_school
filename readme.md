@@ -239,3 +239,11 @@
     [RESUMO:]
       - usuarios logados não podem excluir os outros, mas podem editar e
       exvluir alunos.
+
+  ## seeds
+    - npx sequelize seed:generate --name criar-usuarios
+    - ele esta relacionado a criação de dados em nosso banco para teste∂
+    - seria por exe: dados criado sem ser na base de dados e depois seria enviado.
+    - muito similar para criar as tabelas
+    - depois de preenchido todos os valores da tabela, damos
+    - npx sequelize db:seed:all

@@ -46,3 +46,4 @@ export default async (req, res, next) => {
 
 // para Maria pode editar seus proprios dados, precisa fazer o login e
 // gerar outro token outra vez
+// a cada requisição vms chegcar na base de dados

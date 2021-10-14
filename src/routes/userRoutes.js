@@ -6,7 +6,7 @@ import loginRequired from '../middlewares/loginRequired';
 const router = new Router();
 
 // esses n deveria existir
-// router.get('/', userController.index);
+router.get('/', userController.index);
 // router.get('/:id', userController.show); // se liga no params id
 
 // tirando os ids daqui, pq vms pegar o id pelo o token
