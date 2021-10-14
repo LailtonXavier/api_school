@@ -215,3 +215,18 @@
       mandar esse `token` para ter o acesso, passado atravez do `headers`
       - logo abaixo deve ser cria um `middleware`de autenticacão onde vamos
       checar se o usuario esta mandando pra gente o `token` gerado
+
+  ## middleware de verificaçõo JWT
+    - criando esse middleware é so coloca-lo em qualquer rota para fechar
+    - ele precisa sers passado o token pelo os `headers`ou `auth`
+    - `src` -> `middlewares`-> `loginRequired`
+      - `loginRequired` dentro estamos pegando os id e email, pra quem usaer
+      esse middleware vai ter acesso
+    - em `router` -> `userRoutes` podemos colocar o `loginRequired` onde é preciso o login
+    - oq acontece é que sera extraido o id e email daquele token enviado,
+    em  todas as rotas que tiverem esse middleware
+    - e todas as paginas eu vou ter os dados do usuario
+
+    [OBS:] dessa forma um user pode editar todos, mais n queremos isso
+      - queremos que um usuario so pode editar seus dados e n dos outros
+      - faremos isso logo abaixo
