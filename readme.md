@@ -191,7 +191,7 @@
     - `Controller`dentro vms criar para o token `TokenController`
 
     -- Como funciona:
-      - vamos criar uma rota de `toke` q seria tipo a rota de login
+      - vamos criar uma rota de `token` q seria tipo a rota de login
       - vamos criar um token e entrar de volta pra ele
     - en `routes` vamos criar `tokenRoutes`
 
@@ -230,3 +230,12 @@
     [OBS:] dessa forma um user pode editar todos, mais n queremos isso
       - queremos que um usuario so pode editar seus dados e n dos outros
       - faremos isso logo abaixo
+
+  ## Correção usuario
+    - corrigindo as `routes`
+    - no `userController` para corrigir, vms pegar o id de nosso middleware
+      - nosso token.
+    - para melhorar a segunrança vms
+    [RESUMO:]
+      - usuarios logados não podem excluir os outros, mas podem editar e
+      exvluir alunos.

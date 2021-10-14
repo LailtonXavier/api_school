@@ -1,7 +1,8 @@
 import jwt from 'jsonwebtoken';
+import User from '../models/User';
 
 // em todas as requizoções estamos pasando seu email e id
-export default (req, res, next) => {
+export default async (req, res, next) => {
   const { authorization } = req.headers;
 
   if (!authorization) {
@@ -17,6 +18,22 @@ export default (req, res, next) => {
     // agora vms mandar em tds as requisições os dados
     const { id, email } = dados;
 
+    // checar se meu id e email correspondem ao meu banco, se o msm
+    // comparando com where se o id e email são iguais
+    // explicação abaixo
+    const user = await User.findOne({
+      where: {
+        id,
+        email,
+      },
+    });
+
+    if (!user) {
+      return res.status(401).json({
+        errors: ['Usuario com id e email invalido'],
+      });
+    }
+
     req.userId = id;
     req.userEmail = email;
     return next();
@@ -26,3 +43,6 @@ export default (req, res, next) => {
     });
   }
 };
+
+// para Maria pode editar seus proprios dados, precisa fazer o login e
+// gerar outro token outra vez

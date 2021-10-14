@@ -6,7 +6,9 @@ class UserController {
     try {
       const novoUser = await User.create(req.body);
 
-      return res.json(novoUser);
+      const { id, name, email } = novoUser;
+
+      return res.json({ id, name, email });
     } catch (e) {
       return res.status(400).json({
         errors: e.errors.map((err) => err.message),
@@ -17,8 +19,9 @@ class UserController {
   // index = retorna todos = depois de criar Vai em Routes
   async index(req, res) {
     try {
-      const users = await User.findAll();
-      console.log('email user:', req.userEmail);
+      // atytibutes serve para a gente escolher quais campo queremos
+      const users = await User.findAll({ attributes: ['id', 'name', 'email'] });
+
       return res.json(users);
     } catch (e) {
       return res.json(null);
@@ -33,7 +36,10 @@ class UserController {
       // const { id } = req.params;
       const user = await User.findByPk(req.params.id);
 
-      return res.json(user);
+      // mostrar so quem eu quero
+      const { id, name, email } = user;
+
+      return res.json({ id, name, email });
     } catch (e) {
       return res.json(null);
     }
@@ -42,25 +48,19 @@ class UserController {
   // update = vai ser uma mistura
   async update(req, res) {
     try {
-      // bad request
-      if (!req.params.id) {
-        return res.status(400).json({
-          errors: ['ID não enviado.'],
-        });
-      }
-      const user = await User.findByPk(req.params.id);
+      // pegando o id de meu token
+      const user = await User.findByPk(req.userId);
 
-      // se n existe user
       if (!user) {
-        return res.status(400).json({
+        return res.status(401).json({
           errors: ['Usuario não existe'],
         });
       }
 
       // oq a pessoa mandar eu atualizo
       const novosDados = await user.update(req.body);
-
-      return res.json(novosDados);
+      const { id, name, email } = novosDados;
+      return res.json({ id, name, email });
     } catch (e) {
       // com esse tratamento vemos o erro
       return res.status(400).json({
@@ -72,13 +72,7 @@ class UserController {
   // delete
   async delete(req, res) {
     try {
-      if (!req.params.id) {
-        res.status(400).json({
-          errors: ['ID náo enviado'],
-        });
-      }
-
-      const user = await User.findByPk(req.params.id);
+      const user = await User.findByPk(req.userId);
 
       if (!user) {
         return res.status(400).json({
@@ -88,7 +82,7 @@ class UserController {
 
       // so com isso ele vai ser apagador na base de dados
       await user.destroy();
-      return res.json(user);
+      return res.json(null);
     } catch (e) {
       return res.status(400).json({
         errors: e.errors.map((err) => err.message),

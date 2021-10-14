@@ -28,7 +28,7 @@ class TokenController {
       });
     }
 
-    // criando nosso toke, pegando id e email, secret e o temp
+    // criando nosso token, pegando id e email, secret e o temp
     const { id } = user;
     const token = jwt.sign(
       { id, email },
