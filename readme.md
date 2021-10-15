@@ -2,9 +2,9 @@
 
   - npm run dev
 
-  ## configação - editorconfin - eslint
+  ## Configação - editorconfin - eslint
 
--  ## nodemon + sucrase
+-  ## Nodemon + sucrase
     -- npm i nodemon sucrase -D
 
     - sucrase = vai permitir que utilizamos (imports e exports) do js
@@ -14,7 +14,7 @@
         estamos registrando o sucrase no nodemon
         toda vez que começar a rodar o (nodemon) roda o (sucrase)
 
--  ## estrutura inicial
+-  ## Estrutura inicial
     src --> config
             -> controllers
               -> database
@@ -23,24 +23,24 @@
                     -> routes
                      -> uploads
 
--  ## express
+-  ## Express
     - npm i express
     - criando usando class
       - `app` = class App
 
--  ## routes
+-  ## Routes
     - nossas rotas
 
-- ## sequelize = o cara que vai fazer o controler do nosso banco
+- ## Sequelize = o cara que vai fazer o controler do nosso banco
     - criar tabela, editar, configurar...
       - vamos configurar o `dotenv`
       - npm i dotenv
-  ## dotenv
+  ## Dotenv
     - estou conectando os dados no meu banco do servidor
     - depois das configurações ambiente é so import o dotenv
     - import em `app`
 
-  ## sequelize [criando-alunos]
+  ## Sequelize [criando-alunos]
       -
     - Configuerações q estão
     - migrations = são as alterações que vms fazer no banco de dados
@@ -107,7 +107,7 @@
         - testa em um `controller` passando os dados dos campos e colocando pra rodar, com isso vai
         preencher nosso banco, e podemos ver insomia.
 
-  ## nova Feature de usuario [criando-usuario]
+  ## Nova Feature de usuario [criando-usuario]
     - [map] vms criar o usuario, logar o usuario e depois criar um middleware q faz com a rota tal
       so possa ser acessado por usuarios logado.
     - precisamos criar um [migration] de tabela usuario no banco
@@ -168,7 +168,6 @@
 
      - `UserController` so pra test, é muito parecido com `aluno``
         -- depois é so criar uma `userRoutes`
-        -
 
 
     -- se tiver mais metodos q esse no seu `controller` esta errado
@@ -216,7 +215,7 @@
       - logo abaixo deve ser cria um `middleware`de autenticacão onde vamos
       checar se o usuario esta mandando pra gente o `token` gerado
 
-  ## middleware de verificaçõo JWT
+  ## Middleware de verificaçõo JWT
     - criando esse middleware é so coloca-lo em qualquer rota para fechar
     - ele precisa sers passado o token pelo os `headers`ou `auth`
     - `src` -> `middlewares`-> `loginRequired`
@@ -240,10 +239,23 @@
       - usuarios logados não podem excluir os outros, mas podem editar e
       exvluir alunos.
 
-  ## seeds
+  ## Seeds
     - npx sequelize seed:generate --name criar-usuarios
     - ele esta relacionado a criação de dados em nosso banco para teste∂
     - seria por exe: dados criado sem ser na base de dados e depois seria enviado.
     - muito similar para criar as tabelas
     - depois de preenchido todos os valores da tabela, damos
     - npx sequelize db:seed:all
+
+  ## Rotas de alunos
+    - vms criar um `controller`para alunos = `AlunoController`
+    - criar uma rota `AlunoRoutes`
+    - no `App.js`vamos pegar essa rota `alunoRoutes`importar e criar a rota
+    - depois testar no insomnia
+
+    - criando outra migration para deixar email como unico
+    - vamos deixar email como unico
+      - npx sequelize migration:create --name=mudar-email-aluno-unique
+      - nos vamos mudar um coluna que ja existe
+      - depois da alteração é so aplicar
+        - npx sequelize db:migrate

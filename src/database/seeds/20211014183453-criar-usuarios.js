@@ -35,3 +35,4 @@ module.exports = {
 
 // usando o bcryptjs para zerar o hash da senha
 // senha e o tamanho
+// npx sequelize db:seed:all

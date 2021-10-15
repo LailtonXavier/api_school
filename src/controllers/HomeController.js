@@ -1,16 +1,6 @@
-import Aluno from '../models/Aluno';
-
 class HomeController {
   async index(req, res) {
-    const testAluno = await Aluno.create({
-      name: 'Maria',
-      lastname: 'Silva',
-      email: 'Maria@gmail.com',
-      age: 55,
-      weight: 100,
-      height: 1.70,
-    });
-    res.json(testAluno);
+    res.json('Index');
   }
 }
 
