@@ -259,3 +259,14 @@
       - nos vamos mudar um coluna que ja existe
       - depois da alteração é so aplicar
         - npx sequelize db:migrate
+
+  # CRUD alunos
+    - primeiro vamos em `model`de alunos para validar os campos
+    - validando os campos de alunos em `Aluno`no model
+    - vms criar as rotas de alunos em `AlunoRoutes`
+    - agora vamos no `Controller`criar essas func
+    - depois é so testar no insomnia
+    - lembrando que não podemos deixar tudo aberto
+      - importar o `loginRequired`do meu `middlewares`dentro de `alunoRoutes``
+      - depois é so colocar em quem queremos deixar fechado
+      - para fazer alterações nas rotas fechadas, é so colocar o token
