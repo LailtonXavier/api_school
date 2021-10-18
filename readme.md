@@ -270,3 +270,18 @@
       - importar o `loginRequired`do meu `middlewares`dentro de `alunoRoutes``
       - depois é so colocar em quem queremos deixar fechado
       - para fazer alterações nas rotas fechadas, é so colocar o token
+
+  # Upload de arquivosr
+    - o `express`não suporta, por isso temos que instalar algo
+    - npm i multer
+      - ele quem vai ser responsavel
+    - para isso: criar um controller, rotas
+    - `PhotoController`criamos um controller, logo mais configuramos
+    - `fotosRoutes` criando nossa rota com POST
+    - agora no `App`registrar essa rota
+      - testar no insomnia
+    - vamos configurar o `multer`
+    - `config`-> `multerConfig` vai ficar toda nossa configuração
+    - criando uma pasta de `uploads`na pasta rais
+    - depois ir na rota e configurar
+
