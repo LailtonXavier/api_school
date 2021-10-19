@@ -302,6 +302,7 @@
                - ele vai habilitar = req.file, se fosse varios req.files
                - upload.single('dentro') = dentro vms passar o nome do campo que vair
                - receber o arq
+
                - para mandar mais de uma foto:
 
                -  const maxFotos = 3;
@@ -317,3 +318,85 @@
         `photoController`.
         - meu `photoController` vai fazer o tratamento
 
+  ## Salvando fotos na base de dados
+    - ate o momento a foto esta sendo salve e n esta indo pra lugar nenhum
+      - n sabemos se esta em alunos, ou usuarios e nem na base de dados
+    - resolver
+    - vms criar outra tabela de fotos e vamos fazer essa relação
+
+    - vms colocar na `photoRoutes`o nosso `loginRequired`para precisar do
+      - token para acessar
+    - o que vamos fazer agora é criar uma tabela no banco de dados
+      - onde vms pegar o nome do arq da foto
+      - vms colocar na tabela de fotos o id do aluno, para a gente referenciar
+      - colocando uma Forenkey do aluno na tabela de fotos
+
+    - criar um migração para a tabela de fotos
+      - npx sequelize migration:create --name=criar-tabela-de-fotos-do-aluno
+
+      [about]
+      precisar ter sempre os campos = created_at e updated_at
+
+  agora temos que criar a relaçao a FK
+   - o campo aluno_id ele referencia o nome da tabela
+     aluno, que seria o model, e a key seria pegando o id
+
+  onDelete: o que acontece se apagar a tabela de alunos?
+   queremos que apague todas as fotos q ele tem
+     onDelete: 'SET NULL' o campo vai ficar nullo
+     onDelete: 'CASCADE' o campo vai apagar junto
+
+  onUpdate   =  se alguem alterar o id, a foto tbm precisa mudar para ser o msm
+   onUpdate: 'CASCADE'
+
+   CASCADE
+   RESTRICT
+   NO ACTION
+   SET NULL
+
+   - ON DELETE CASCADE se o registro pai for deletado, o filho tbm sera
+
+   - ON UPDATE CASCADE se a primaryKey do registro pai fot alterado,
+  isso sera refletido no registro do filho
+
+   - RESTRICT significa que qualquer tentatica de apagar ou atualizar o registro
+  pai vai falhar lançando um erro
+
+   - NO ACTION sem acoes (vc precisar apagar tds as fotos, para depois
+  apagar a tabela)
+
+   - SET NULL se vc atualizar ou apagar a primeryKey do registro pai, a
+  foreign Key do registro filho sera configurado pelo NULL.
+
+- depois de toda configuracao da tabela
+   - npx sequelize db:migrate
+
+- agora vms criar nosso `models` -> `Foto`
+
+ - podemos falar que a foto pertence a alunos
+    ou alunos pertence a fotos
+
+ - this.belongsTo() = ele pertence a outro model e quem é a foreing Key
+    quem é a chave estarangeia
+    no aluno poderaiamo fazer
+     this.hasOne(models.Aluno, { foreignKey: 'aluno_id' });   = temos 'um'
+     this.hasMany = temos 'muitos'
+
+     depois de associar vms em `database` -> `index`
+     pegar nosso model de `Foto`e imprta pra la dentro
+
+ - vms em `fotoController`importart o model e criar uma foto
+    - assim que fizer o upload das fotos vms pegar o nome e salvar na
+    base de dados
+    - e o mais importante que isso tem que ter um aluno para a gente colocar
+      na base de dados
+
+    - se quiser limpar a tabela no MySql = truncate table escola.fotos
+
+    - no `fotoController`vamos pegar os nomes da foto e o id, que sera enviado
+      pelo o (req.body)
+    - para fazer os teste, vc pode enviar a foto pelo o `insonmia`
+      - mandando a foto, o id
+      - no banco MySql é so mudar o id, vemos o efeito do
+        - onUpdate = CASCADE, onde qnd mudar o id no `aluno` a `foto` que
+        estiver referenciado tbm ira mudar
