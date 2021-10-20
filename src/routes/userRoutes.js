@@ -11,7 +11,7 @@ const router = new Router();
 
 // tirando os ids daqui, pq vms pegar o id pelo o token
 // tudo esta de acordo com o id do token para fazer essas coisas
-router.post('/', userController.store); // criar conta
+router.post('/', loginRequired, userController.store); // criar conta
 router.put('/', loginRequired, userController.update);
 router.delete('/', loginRequired, userController.delete);
 

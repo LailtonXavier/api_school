@@ -1,9 +1,19 @@
 import Aluno from '../models/Aluno';
+import Foto from '../models/Foto';
 
 class AlunoController {
   async index(req, res) {
     // ver todos os alunos
-    const alunos = await Aluno.findAll();
+    // vms retonar os campos que queremos
+    // observe q para fotos podemos pegar os campos tbm
+    const alunos = await Aluno.findAll({
+      attributes: ['id', 'name', 'lastname', 'email', 'age', 'weight', 'height'],
+      order: [['id', 'DESC'], [Foto, 'id', 'DESC']],
+      include: {
+        model: Foto,
+        attributes: ['url', 'filename', 'originalname'],
+      },
+    });
     res.json(alunos);
   }
 
@@ -29,7 +39,14 @@ class AlunoController {
         });
       }
 
-      const aluno = await Aluno.findByPk(id);
+      const aluno = await Aluno.findByPk(id, {
+        attributes: ['id', 'name', 'lastname', 'email', 'age', 'weight', 'height'],
+        order: [['id', 'DESC'], [Foto, 'id', 'DESC']],
+        include: {
+          model: Foto,
+          attributes: ['url', 'filename', 'originalname'],
+        },
+      });
 
       if (!aluno) {
         return res.status(400).json({

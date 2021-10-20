@@ -319,6 +319,9 @@
         - meu `photoController` vai fazer o tratamento
 
   ## Salvando fotos na base de dados
+   - criar um migração para a tabela de fotos
+      - npx sequelize migration:create --name=criar-tabela-de-fotos-do-aluno
+
     - ate o momento a foto esta sendo salve e n esta indo pra lugar nenhum
       - n sabemos se esta em alunos, ou usuarios e nem na base de dados
     - resolver
@@ -330,9 +333,6 @@
       - onde vms pegar o nome do arq da foto
       - vms colocar na tabela de fotos o id do aluno, para a gente referenciar
       - colocando uma Forenkey do aluno na tabela de fotos
-
-    - criar um migração para a tabela de fotos
-      - npx sequelize migration:create --name=criar-tabela-de-fotos-do-aluno
 
       [about]
       precisar ter sempre os campos = created_at e updated_at
@@ -400,3 +400,59 @@
       - no banco MySql é so mudar o id, vemos o efeito do
         - onUpdate = CASCADE, onde qnd mudar o id no `aluno` a `foto` que
         estiver referenciado tbm ira mudar
+
+  ## listando alunos com suas fotos
+    - de cara estamos com um erro: se add uma foto no banco com ID invalido,
+      ela dar um erro, temos que tratar
+    - `PhotoController`colocamos um try{} catch() e assumimos um erro
+      - se ele n conseguir criar
+    - agora precisamos ver os dados do `alunos` junto com sua foto
+      - `AlunoController` primeiro vms ordenar
+        - order: [['id', 'ASC']],  = assedente
+        - order: [['id', 'DESC']], = decrescente (norlmente esse é o mais usado)
+    - para exibir as fotos, vms import de nosso model `Fotos` de dentro do
+      `AlunoController`.
+          include: {
+            model: Foto,
+          },
+      - deu erro, pq fotos n esat associado com `Aluno`e se ao contrario.
+    - para corrigir
+      - em models `Aluno` vms criar nossa associação com `Fotos`
+        - tudo certo, oq esta acontecendo, Um `aluno` tem varias fotos e isso
+        ta certo, porem queremos a ultima foto enviado e n a primeira
+        - e as outras fotos seria tipo uma galeria
+    - `AlunoController` podemos colocar a msm orden decrescente
+      - [Foto, 'id', 'DESC']  - tudo certo
+
+    [OBS:]
+      esse codigo todo, tbm serve para outras rotas,
+      ou seja, para mostrar o usuario com o seu id, temos que fazer a
+      msm associacao de fotos, que esta a cima
+
+    [OBS-2:]
+      temos que fechar a nossa rota de registro do usuario,
+      porque isso? segundo o professor, a rota aberta pode haver muito
+      espans, para resolver, temos ciar um uauario e fazer o login nele,
+      fechar a rota e pegar o token dele.
+
+  ## Arquivos estaticos
+    - criar as URL de imagens, criando um campo virtual, ja resolve
+    - no model das fotos `Foto` criando um campo Vitual
+    - quando queremos usar uma configuração mais de uma vez
+      - em `config` criamos `appConfig`
+      - criando uma url com nosso local host
+    - pegamos esse `appConfig`em model `Foto`
+    - para ficar organizado, criamos outra past (images) dentro de (uploads)
+    - com isso, temos que mudar as configurações de `multer`
+    - deu certo, agora deveos configurar nossa arq staticos, pq qnd clicado
+      no link da imagem, n abri nada
+    - la no `app` vamos falar qual a pagina de arq statics
+      que seria nossa pagina de `uploads`
+      - em `middlewares`colocamos o caminho de uploads
+      - muito louco, fd mano
+    - qnd vc fizer uma configuração deve mexeer onde ela esta atrelada
+      - a url de fotos que acabamos de criar, n esta mostrando em `aluno`
+      temos que corrigir isso.
+      - em `AlunoController` no nosso attributes, colomas url e deixamos filename
+      - resolvido
+

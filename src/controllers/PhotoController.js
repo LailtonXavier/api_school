@@ -17,14 +17,21 @@ class PhotoController {
         });
       }
 
-      // pegando os nomes da foto
-      const { originalname, filename } = req.file;
-      // pegando o id do body que sera enviado
-      const { aluno_id } = req.body;
+      try {
+        // pegando os nomes da foto
+        const { originalname, filename } = req.file;
+        // pegando o id do body que sera enviado
+        const { aluno_id } = req.body;
 
-      // criando no banco
-      const foto = await Foto.create({ originalname, filename, aluno_id });
-      return res.json(foto);
+        // criando no banco
+        const foto = await Foto.create({ originalname, filename, aluno_id });
+
+        return res.json(foto);
+      } catch (e) {
+        return res.status(400).json({
+          errors: ['Usuario não existe'],
+        });
+      }
     });
   }
 }
