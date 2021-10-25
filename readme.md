@@ -2,6 +2,13 @@
 
   - npm run dev
 
+  ## para **Login**
+
+  {
+	"email": "lailtonxavier123@gmail.com",
+	"password": "123456"
+}
+
   ## Configação - editorconfin - eslint
 
 -  ## Nodemon + sucrase
